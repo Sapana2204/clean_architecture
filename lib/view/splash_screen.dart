@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset('assets/images/soulconnect_logo.png'),
+            child: Image.asset('assets/images/logo.png'),
           )
         ],
       )),

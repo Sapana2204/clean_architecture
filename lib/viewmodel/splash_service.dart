@@ -13,7 +13,15 @@ class SplashService {
   static Future<void> checkAuthentication(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    // 👉 Directly go to Home (no login check)
-    Navigator.pushReplacementNamed(context, RouteNames.home);
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null || JwtDecoder.isExpired(token)) {
+      // 👉 User not logged in → go to Login
+      Navigator.pushReplacementNamed(context, RouteNames.login);
+    } else {
+      // 👉 User already logged in → go to Home
+      Navigator.pushReplacementNamed(context, RouteNames.home);
+    }
   }
 }

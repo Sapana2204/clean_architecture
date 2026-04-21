@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/routes/app_colors.dart';
+import 'homeScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -8,131 +9,175 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Stack(
-        children: [
-          /// 🔵 TOP CURVED BACKGROUND
-          Container(
-            height: 280,
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              gradient: primaryGradient,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(80),
-              ),
+              color: white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                )
+              ],
             ),
-          ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-          /// 🔵 LIGHT CURVE LAYER (for design depth)
-          Positioned(
-            top: 120,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 180,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(80),
+                /// 🔷 LOGO + TITLE
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/logo.png",
+                      height: 40,
+                    ),
+                    const SizedBox(width: 10),
+
+                  ],
                 ),
-              ),
-            ),
-          ),
 
-          /// 🧾 CONTENT
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(
-                children: [
-                  const SizedBox(height: 40),
+                const SizedBox(height: 25),
 
-                  /// 🚀 LOGO
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      color: white.withOpacity(0.2),
-                      shape: BoxShape.circle,
+                /// 👋 WELCOME TEXT
+                Text(
+                  "Welcome",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  "Sign in to your workspace to continue.",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: textSecondary,
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                /// 📧 EMAIL FIELD
+                _inputField(
+                  label: "WORK EMAIL",
+                  hint: "name@company.com",
+                  icon: Icons.email_outlined,
+                ),
+
+                const SizedBox(height: 16),
+
+                /// 🔒 PASSWORD FIELD
+                _inputField(
+                  label: "PASSWORD",
+                  hint: "Enter password",
+                  icon: Icons.lock_outline,
+                  isPassword: true,
+                ),
+
+                const SizedBox(height: 10),
+
+                /// 🔗 FORGOT PASSWORD + REMEMBER
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (val) {},
+                          activeColor: primary,
+                        ),
+                        Text(
+                          "Remember this device",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: textSecondary,
+                          ),
+                        )
+                      ],
                     ),
-                    child: const Icon(
-                      Icons.public, // replace with your logo image if needed
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
+                    Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
 
-                  const SizedBox(height: 60),
+                const SizedBox(height: 15),
 
-                  /// 📩 USERNAME FIELD
-                  _inputField(
-                    hint: "enter your username",
-                    label: "username",
-                    icon: Icons.person,
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  /// 🔒 PASSWORD FIELD
-                  _inputField(
-                    hint: "enter your password",
-                    label: "password",
-                    icon: Icons.lock,
-                    isPassword: true,
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  /// 🔘 LOGIN BUTTON
-                  Container(
+                /// 🔘 SIGN IN BUTTON
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
                       gradient: buttonGradient,
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primary.withOpacity(0.3),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        )
-                      ],
                     ),
                     child: const Center(
                       child: Text(
-                        "login",
+                        "Sign In →",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
                         ),
                       ),
                     ),
                   ),
+                ),
 
-                  const Spacer(),
+                const SizedBox(height: 25),
 
-                  /// 📝 SIGN UP
-                  Text(
-                    "SIGN UP",
-                    style: TextStyle(
-                      color: textSecondary,
-                      fontWeight: FontWeight.w500,
+
+
+                /// SIGNUP
+                Center(
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Don't have an account? ",
+                      style: TextStyle(color: textSecondary),
+                      children: [
+                        TextSpan(
+                          text: "Request Access",
+                          style: TextStyle(
+                            color: primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      ],
                     ),
                   ),
-
-                  const SizedBox(height: 20),
-                ],
-              ),
+                )
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
 
-  /// 🔹 INPUT FIELD WIDGET
+  /// 🔹 INPUT FIELD
   Widget _inputField({
-    required String hint,
     required String label,
+    required String hint,
     required IconData icon,
     bool isPassword = false,
   }) {
@@ -142,35 +187,29 @@ class LoginScreen extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
+            fontSize: 11,
             color: textSecondary,
-            fontSize: 13,
+            fontWeight: FontWeight.w500,
           ),
         ),
         const SizedBox(height: 6),
-        Container(
-          decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              )
-            ],
-          ),
-          child: TextField(
-            obscureText: isPassword,
-            decoration: InputDecoration(
-              hintText: hint,
-              prefixIcon: Icon(icon, color: grey),
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        TextField(
+          obscureText: isPassword,
+          decoration: InputDecoration(
+            hintText: hint,
+            prefixIcon: Icon(icon, color: grey),
+            filled: true,
+            fillColor: backgroundColor,
+            contentPadding: const EdgeInsets.symmetric(vertical: 14),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
           ),
         ),
       ],
     );
   }
+
+
 }
